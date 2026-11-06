@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الحروف والأصوات التفاعلية</title>
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        @import url('https://googleapis.com');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-8 shadow-md">
+        <h1 class="text-3xl font-black mb-2">🎓 منبر الحروف العربية التفاعلي</h1>
+        <p class="text-indigo-100 text-sm">تعلم الحروف والأصوات القصيرة والطويلة مع نظام اختبار ذكي</p>
+    </header>
+    <main class="max-w-4xl mx-auto p-4 md:p-8 space-y-8">
+        <section class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
+            <h2 class="text-xl font-bold mb-4 text-slate-800">اختر حرفاً لتبدأ التعلم والاستماع:</h2>
+            <div id="letters-container" class="grid grid-cols-4 sm:grid-cols-7 gap-3"></div>
+        </section>
+        <section id="details-card" class="bg-white rounded-2xl shadow-xl p-6 border border-slate-100 hidden">
+            <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+                <div id="current-letter-display" class="w-16 h-16 bg-indigo-600 text-white font-black text-3xl flex items-center justify-center rounded-xl shadow-md">أ</div>
+                <div>
+                    <h3 id="current-letter-title" class="text-2xl font-bold text-slate-800">حرف الألف</h3>
+                    <p class="text-xs text-slate-500">انقر على البطاقات بالأسفل للاستماع لنطق الصوت والكلمة والجملة</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                    <h4 class="font-bold text-amber-800 mb-3 flex items-center gap-2">☀️ الأصوات القصيرة (الحركات)</h4>
+                    <div id="short-vowels-list" class="space-y-3"></div>
+                </div>
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                    <h4 class="font-bold text-emerald-800 mb-3 flex items-center gap-2">🌱 الأصوات الطويلة (المدود)</h4>
+                    <div id="long-vowels-list" class="space-y-3"></div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+            <h2 class="text-xl font-bold mb-2 text-slate-800 flex items-center gap-2">🎮 العب وتعلّم (اختبر معلوماتك)</h2>
+            <p class="text-sm text-slate-500 mb-4">استمع للكلمة ثم اختر الحرف الصحيح الذي تبدأ به الكلمة لتفوز بنقاط!</p>
+            <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl text-center space-y-4">
+                <div class="flex justify-between items-center max-w-xs mx-auto mb-2 text-sm font-bold text-indigo-700">
+                    <span>النقاط المتراكمة: <span id="score-display">0</span></span>
+                    <button onclick="generateQuizQuestion()" class="text-xs underline cursor-pointer hover:text-indigo-900">تغيير الكلمة 🔄</button>
+                </div>
+                <button onclick="speakQuizWord()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-md transition-all active:scale-95 inline-flex items-center gap-2 cursor-pointer font-bold">
+                    <span>🔊 اسمع الكلمة المطلوبة</span>
+                </button>
+                <div id="quiz-options" class="flex justify-center gap-3 pt-2"></div>
+                <div id="quiz-feedback" class="text-sm font-bold h-6 transition-all duration-300"></div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const arabicData = {
+            "أ": { name: "الألف", short: [{ sound: "أَ", word: "أَسَد", sentence: "الأَسَدُ مَلِكُ الغَابَةِ." }, { sound: "أُ", word: "أُذُن", sentence: "الأُذُنُ عُضْوُ السَّمْعِ." }, { sound: "إِ", word: "إِبْرِيق", sentence: "الإِبْرِيقُ مَلِيءٌ بِالمَاءِ." }], long: [{ sound: "آ", word: "آدَم", sentence: "آدَمُ وَلَدٌ ذَكِيٌّ." }, { sound: "أُو", word: "أُولَى", sentence: "هَذِهِ هِيَ المَرْتَبَةُ الأُولَى." }, { sound: "إِي", word: "إِيمَان", sentence: "الإِيمَانُ يَمْلأُ القَلْبَ." }] },
+            "ب": { name: "الباء", short: [{ sound: "بَ", word: "بَقَرَة", sentence: "البَقَرَةُ تُعْطِينَا الحَلِيبَ." }, { sound: "بُ", word: "بُرْتُقَال", sentence: "البُرْتُقَالُ غَنِيٌّ بِالْفِيتَامِينَاتِ." }, { sound: "بِ", word: "بِنْت", sentence: "البِنْتُ تُسَاعِدُ أُمَّهَا." }], long: [{ sound: "بَا", word: "بَاب", sentence: "بَابُ البَيْتِ مَفْتُوحٌ." }, { sound: "بُو", word: "بُومَة", sentence: "البُومَةُ طَائِرٌ يَظْهَرُ لَيْلاً." }, { sound: "بِي", word: "بِيبِي", sentence: "يَنَامُ الطِّفْلُ فِي سَرِيرِهِ." }] },
+            "ت": { name: "التاء", short: [{ sound: "تَ", word: "تَمْر", sentence: "التَّمْرُ غِذَاءٌ صِحِّيٌّ وَمُفِيدٌ." }, { sound: "تُ", word: "تُفَّاح", sentence: "التُّفَّاحُ الأَحْمَرُ لَذِيذٌ جِدّاً." }, { sound: "تِ", word: "تِمْسَاح", sentence: "التِّمْسَاحُ يَعِيشُ فِي المَاءِ." }], long: [{ sound: "تَا", word: "تَاج", sentence: "المَلِكُ يَلْبَسُ تَاجاً ذَهَبِيّاً." }, { sound: "تُو", word: "تُوت", sentence: "قَطَفْنَا التُّوتَ الطَّازَجَ مِنَ الحَدِيقَةِ." }, { sound: "تِي", word: "تِين", sentence: "التِّينُ مِنَ الفَوَاكِهِ الطَّيِّبَةِ." }] },
+            "ث": { name: "الثاء", short: [{ sound: "ثَ", word: "ثَعْلَب", sentence: "الثَّعْلَبُ حَيَوَانٌ مَاكِرٌ." }, { sound: "ثُ", word: "ثُعْبَان", sentence: "الثُّعْبَانُ يَدُبُّ عَلَى الأَرْضِ." }, { sound: "ثِ", word: "ثِيَاب", sentence: "ثِيَابِي نَظِيفَةٌ وَمُرَتَّبَةٌ." }], long: [{ sound: "ثَا", word: "ثَالِث", sentence: "هَذَا هُوَ المَرْكَزُ الثَّالِثُ." }, { sound: "ثُو", word: "ثُوم", sentence: "الثُّومُ يُعْطِي الطَّعَامَ نَكْهَةً طَيِّبَةً." }, { sound: "ثِي", word: "ثِيرَان", sentence: "الثِّيرَانُ تَحْرُثُ الأَرْضَ." }] },
+            "ج": { name: "الجيم", short: [{ sound: "جَ", word: "جَمَل", sentence: "الجَمَلُ سَفِينَةُ الصَّحْرَاءِ." }, { sound: "جُ", word: "جُبْن", sentence: "جُبْنُ مَصْنُوعٌ مِنَ الحَلِيبِ." }, { sound: "جِ", word: "جِدَار", sentence: "جِدَارُ الغُرْفَةِ مَبْنِيٌّ بِقُوَّةٍ." }], long: [{ sound: "جَا", word: "جَامِعَة", sentence: "أَخِي الكَبِيرُ يَدْرُسُ فِي الجَامِعَةِ." }, { sound: "جُو", word: "جُوع", sentence: "أَشْعُرُ بِالْجُوعِ بَعْدَ اللَّعِبِ." }, { sound: "جِي", word: "جِيرَان", sentence: "جِيرَانُنَا طَيِّبُونَ وَمُتَعَاوِنُونَ." }] },
+            "ح": { name: "الحاء", short: [{ sound: "حَ", word: "حَلِيب", sentence: "الحَلِيبُ يُقَوِّي العِظَامَ." }, { sound: "حُ", word: "حُوت", sentence: "الحُوتُ أَضْخَمُ كَائِنٍ فِي البَحْرِ." }, { sound: "حِ", word: "حِمَار", sentence: "الحِمَارُ حَيَوَانٌ صَبُورٌ." }], long: [{ sound: "حَا", word: "حَافِلَة", sentence: "رَكِبْنَا حَافِلَةَ المَدْرَسَةِ." }, { sound: "حُو", word: "حُوتِي", sentence: "النَّجْمُ الحُوتِيُّ يَلْمَعُ فِي السَّمَاءِ." }, { sound: "حِي", word: "حِيتَان", sentence: "تَسْبَحُ الحِيتَانُ فِي المُحِيطِ." }] },
+            "خ": { name: "الخاء", short: [{ sound: "خَ", word: "خَرُوف", sentence: "يَرْعَى الخَرُوفُ فِي العُشْبِ." }, { sound: "خُ", word: "خُبْز", sentence: "الخُبْزُ السَّاخِنُ لَذِيذٌ جِدّاً." }, { sound: "خِ", word: "خِيَار", sentence: "الخِيَارُ طَازَجٌ وَمُفِيدٌ لِلصِّحَّةِ." }], long: [{ sound: "خَا", word: "خَاتَم", sentence: "أُمِّي تَلْبَسُ خَاتَماً جَمِيلاً." }, { sound: "خُو", word: "خُوخ", sentence: "الخُوخُ مِنَ الفَوَاكِهِ الصَّيْفِيَّةِ." }, { sound: "خِي", word: "خِيار", sentence: "الخِيَارُ يُضَافُ إِلَى السَّلَطَةِ." }] },
+            "د": { name: "الدال", short: [{ sound: "دَ", word: "دَجَاجَة", sentence: "الدَّجَاجَةُ تَبْحَثُ عَنِ الحَبِّ." }, { sound: "دُ", word: "دُبّ", sentence: "الدُّبُّ يَعِيشُ فِي الغَابَةِ البَارِدَةِ." }, { sound: "دِ", word: "دِيك", sentence: "الدِّيكُ يَصِيحُ فِي الصَّبَاحِ البَاكِرِ." }], long: [{ sound: "دَا", word: "دَار", sentence: "دَارُنَا وَاسِعَةٌ وَجَمِيلَةٌ." }, { sound: "دُو", word: "دُودَة", sentence: "الدُّودَةُ تَزْحَفُ عَلَى الأَرْضِ." }, { sound: "دِي", word: "دِيكور", sentence: "دِيكُورُ المَنْزِلِ رَائِعٌ جِدّاً." }] },
+            "ذ": { name: "الذال", short: [{ sound: "ذَ", word: "ذَهَب", sentence: "الذَّهَبُ مَعْدِنٌ ثَمِينٌ وَلَامِعٌ." }, { sound: "ذُ", word: "ذُبَابَة", sentence: "الذُّبَابَةُ حَشَرَةٌ مُزْعِجَةٌ." }, { sound: "ذِ", word: "ذِئْب", sentence: "الذِّئْبُ حَيَوَانٌ قَوِيٌّ وَذَكِيٌّ." }], long: [{ sound: "ذَا", word: "ذَاكِرَة", sentence: "القِرَاءَةُ تُقَوِّي ذَاكِرَةَ الإِنْسَانِ." }, { sound: "ذُو", word: "بُذُور", sentence: "الفَلَّاحُ يَزْرَعُ البُذُورَ فِي الأَرْضِ." }, { sound: "ذِي", word: "مُذِيع", sentence: "المُذِيعُ يَتَحَدَّثُ بِمَكْرُوفُونِ المَحَطَّةِ." }] },
+            "ر": { name: "الراء", short: [{ sound: "رَ", word: "رَجُل", sentence: "الرَّجُلُ الصَّالِحُ يُسَاعِدُ النَّاسَ." }, { sound: "رُ", word: "رُمَّان", sentence: "الرُّمَّانُ فَاكِهَةٌ شَهِيَّةٌ وَمُفِيدَةٌ." }, { sound: "رِ", word: "رِيشَة", sentence: "رِيشَةُ الطَّائِرِ خَفِيفَةٌ وَمُلَوَّنَةٌ." }], long: [{ sound: "رَا", word: "رَادْيُو", sentence: "جَدِّي يَسْتَمِعُ إِلَى الرَّادْيُو." }, { sound: "رُو", word: "قُرُود", sentence: "القُرُودُ تَقْفِزُ فَوْقَ الأَشْجَارِ." }, { sound: "رِي", word: "رِيش", sentence: "الرِّيشُ يُغَطِّي جِسْمَ الطُّيُورِ." }] },
