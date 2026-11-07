@@ -109,7 +109,7 @@
                 btn.onclick = () => showLetterDetails(letter);
                 container.appendChild(btn);
             });
-            generateQuizQuestion();
+            generateQuizQuestion(false); // تعديل: توليد السؤال بدون إطلاق نطق تلقائي لحماية السكربت من الحظر
         }
 
         function showLetterDetails(letter) {
@@ -136,5 +136,3 @@
         function createAudioCard(sound, word, sentence) {
             const div = document.createElement('div');
             div.className = "audio-card";
-            div.innerHTML = `
-                <div class="audio-card-text">
