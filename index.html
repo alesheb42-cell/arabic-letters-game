@@ -3,136 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الحروف العربية التفاعلية</title>
+    <title>لعبة الحروف العربية التفاعلية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 0; text-align: right; }
-        header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; text-align: center; padding: 25px 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        header h1 { margin: 0 0 5px 0; font-size: 24px; font-weight: 900; }
-        header p { margin: 0; font-size: 13px; color: #e0e7ff; }
-        main { max-width: 600px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
-        section { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
-        section h2 { margin-top: 0; font-size: 18px; color: #0f172a; margin-bottom: 12px; }
-        .grid-letters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .letter-btn { background-color: #f5f3ff; color: #4f46e5; border: 1px solid #ddd6fe; font-size: 18px; font-weight: bold; padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; transition: all 0.2s; }
-        .letter-btn:active { transform: scale(0.95); background-color: #ddd6fe; }
-        .details-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px; }
-        .letter-big { width: 50px; height: 50px; background: #4f46e5; color: white; font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
-        .details-header h3 { margin: 0; font-size: 18px; color: #1e293b; }
-        .vowels-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .vowel-section-short { background-color: #fffbeb; border: 1px solid #fef3c7; padding: 12px; border-radius: 10px; }
-        .vowel-section-long { background-color: #ecfdf5; border: 1px solid #d1fae5; padding: 12px; border-radius: 10px; }
-        .vowel-section-short h4 { margin: 0 0 8px 0; color: #92400e; font-size: 14px; }
-        .vowel-section-long h4 { margin: 0 0 8px 0; color: #065f46; font-size: 14px; }
-        .audio-card { background: white; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
-        .audio-card-text { font-size: 14px; color: #334155; text-align: right; width: 100%; }
-        .audio-card-sound { font-weight: 900; color: #4f46e5; font-size: 16px; }
-        .audio-card p { margin: 2px 0 0 0; font-size: 11px; color: #64748b; }
-        .speak-btn { background: #eef2ff; color: #4f46e5; border: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 12px; white-space: nowrap; margin-right: 5px; }
-        .quiz-box { background: #eef2ff; border: 1px solid #e0e7ff; padding: 15px; border-radius: 12px; text-align: center; }
-        .quiz-header { display: flex; justify-content: space-between; font-weight: bold; color: #3730a3; font-size: 13px; margin-bottom: 12px; }
-        .quiz-listen-btn { background: #4f46e5; color: white; border: none; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 12px; }
-        .quiz-options { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
-        .opt-btn { background: white; border: 1px solid #cbd5e1; color: #1e293b; font-size: 16px; font-weight: bold; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
-        .feedback { font-size: 13px; font-weight: bold; height: 18px; margin-top: 12px; }
-        .hidden { display: none !important; }
+        :root {
+            --primary: #4a90e2;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: #34495e;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .letter-display {
+            font-size: 80px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+            animation: bounce 0.5s ease;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-option {
+            background-color: var(--light);
+            border: 2px solid #ddd;
+            color: var(--dark);
+        }
+
+        .btn-option:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* مساحة مخصصة لإعلانات AdSense */
+        .ads-container {
+            margin: 20px auto;
+            max-width: 728px;
+            min-height: 90px;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed #ccc;
+            font-size: 12px;
+            color: #777;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>🎓 منصة الحروف العربية التفاعلية</h1>
-        <p>تعلم الأصوات والكلمات مع نظام اختبار ذكي وممتع</p>
+        <h1>لعبة الحروف العربية التفاعلية</h1>
     </header>
+
+    <nav>
+        <a onclick="showPage('game-page')">الرئيسية (اللعبة)</a>
+        <a onclick="showPage('privacy-page')">سياسة الخصوصية</a>
+        <a onclick="showPage('contact-page')">اتصل بنا</a>
+    </nav>
+
+    <!-- إعلان علوي -->
+    <div class="ads-container">
+        <span>مساحة إعلانية (سيتم ربطها بـ AdSense لاحقاً)</span>
+    </div>
+
     <main>
-        <section>
-            <h2>اختر حرفاً لتبدأ التعلم والاستماع:</h2>
-            <div id="letters-container" class="grid-letters"></div>
-        </section>
-        <section id="details-card" class="hidden">
-            <div class="details-header">
-                <div id="current-letter-display" class="letter-big">أ</div>
-                <div>
-                    <h3 id="current-letter-title">حرف الألف</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748b;">اضغط على بطاقات الحروف للاستماع</p>
-                </div>
+        <!-- صفحة اللعبة -->
+        <div id="game-page" class="container page active">
+            <div class="score-board">
+                <div>النقاط: <span id="score">0</span></div>
+                <div>المحاولة: <span id="question-count">1</span>/11</div>
             </div>
-            <div class="vowels-grid">
-                <div class="vowel-section-short">
-                    <h4>☀️ الأصوات القصيرة (الحركات)</h4>
-                    <div id="short-vowels-list"></div>
-                </div>
-                <div class="vowel-section-long">
-                    <h4>🌱 الأصوات الطويلة (المدود)</h4>
-                    <div id="long-vowels-list"></div>
-                </div>
+
+            <p>ما هو الحرف الظاهر أمامك؟</p>
+            <div id="letter" class="letter-display">أ</div>
+
+            <div class="options-grid" id="options">
+                <!-- الأزرار ستتولد هنا بواسطة جافاسكربت -->
             </div>
-        </section>
-        <section>
-            <h2>🎮 العب وتعلّم (اختبر معلوماتك)</h2>
-            <div class="quiz-box">
-                <div class="quiz-header">
-                    <span>النقاط المتراكمة: <span id="score-display" style="font-size:15px; color:#4f46e5;">0</span></span>
-                    <span onclick="generateQuizQuestion()" style="text-decoration: underline; cursor: pointer;">تغيير الكلمة 🔄</span>
-                </div>
-                <button onclick="speakQuizWord()" class="quiz-listen-btn">🔊 اسمع الكلمة المطلوبة</button>
-                <div id="quiz-options" class="quiz-options"></div>
-                <div id="quiz-feedback" class="feedback"></div>
-            </div>
-        </section>
+            
+            <div id="result-message" style="margin-top: 15px; font-weight: bold;"></div>
+        </div>
+
+        <!-- صفحة سياسة الخصوصية (مهمة لجوجل أدسينس) -->
+        <div id="privacy-page" class="container page">
+            <h2>سياسة الخصوصية</h2>
+            <p>خصوصية زوارنا لها أهمية بالغة بالنسبة لنا. توضح هذه الوثيقة أنواع المعلومات الشخصية التي نجمعها وكيفية استخدامها.</p>
+            <p>نحن نستخدم شركات إعلان خارجية (مثل Google AdSense) لعرض الإعلانات عندما تزور موقعنا. قد تستخدم هذه الشركات معلومات حول زياراتك لهذا الموقع من أجل تقديم إعلانات حول السلع والخدمات التي تهمك.</p>
+        </div>
+
+        <!-- صفحة اتصل بنا (مهمة لجوجل أدسينس) -->
+        <div id="contact-page" class="container page">
+            <h2>اتصل بنا</h2>
+            <p>إذا كان لديك أي استفسار حول اللعبة أو سياسة الخصوصية، يمكنك التواصل معنا عبر البريد الإلكتروني:</p>
+            <p><strong>support@yourdomain.com</strong></p>
+        </div>
     </main>
 
+    <!-- إعلان سفلي -->
+    <div class="ads-container">
+        <span>مساحة إعلانية (سيتم ربطها بـ AdSense لاحقاً)</span>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 جميع الحقوق محفوظة لـ لعبة الحروف العربية</p>
+    </footer>
+
     <script>
-        const arabicData = {
-            "أ": { name: "الألف", short: [{ sound: "أَ", word: "أَسَد", sentence: "الأَسَدُ مَلِكُ الغَابَةِ." }], long: [{ sound: "آ", word: "آدَم", sentence: "آدَمُ وَلَدٌ ذَكِيٌّ." }] },
-            "ب": { name: "الباء", short: [{ sound: "بَ", word: "بَقَرَة", sentence: "البَقَرَةُ تُعْطِينَا الحَلِيبَ." }], long: [{ sound: "بَا", word: "بَاب", sentence: "بَابُ البَيْتِ مَفْتُوحٌ." }] },
-            "ت": { name: "التاء", short: [{ sound: "تَ", word: "تَمْر", sentence: "التَّمْرُ غِذَاءٌ صِحِّيٌّ." }], long: [{ sound: "تَا", word: "تَاج", sentence: "المَلِكُ يَلْبَسُ تَاجاً." }] },
-            "ث": { name: "الثاء", short: [{ sound: "ثَ", word: "ثَعْلَب", sentence: "الثَّعْلَبُ حَيَوَانٌ مَاكِرٌ." }], long: [{ sound: "ثَا", word: "ثَالِث", sentence: "هَذَا هُوَ المَرْكَزُ الثَّالِثُ." }] },
-            "ج": { name: "الجيم", short: [{ sound: "جَ", word: "جَمَل", sentence: "الجَمَلُ سَفِينَةُ الصَّحْرَاءِ." }], long: [{ sound: "جَا", word: "جَامِعَة", sentence: "أَخِي يَدْرُسُ فِي الجَامِعَةِ." }] },
-            "ح": { name: "الحاء", short: [{ sound: "حَ", word: "حَلِيب", sentence: "الحَلِيبُ يُقَوِّي العِظَامَ." }], long: [{ sound: "حَا", word: "حَافِلَة", sentence: "رَكِبْنَا حَافِلَةَ المَدْرَسَةِ." }] },
-            "خ": { name: "الخاء", short: [{ sound: "خَ", word: "خَرُوف", sentence: "يَرْعَى الخَرُوفُ فِي العُشْبِ." }], long: [{ sound: "خَا", word: "خَاتَم", sentence: "أُمِّي تَلْبَسُ خَاتَماً جَمِيلاً." }] },
-            "د": { name: "الدال", short: [{ sound: "دَ", word: "دَجَاجَة", sentence: "الدَّجَاجَةُ تَبْحَثُ عَنِ الحَبِّ." }], long: [{ sound: "دَا", word: "دَار", sentence: "دَارُنَا وَاسِعَةٌ وَجَمِيلَةٌ." }] },
-            "ذ": { name: "الذال", short: [{ sound: "ذَ", word: "ذَهَب", sentence: "الذَّهَبُ مَعْدِنٌ ثَمِينٌ." }], long: [{ sound: "ذَا", word: "ذَاكِرَة", sentence: "القِرَاءَةُ تُقَوِّي الذَاكِرَةَ." }] },
-            "ر": { name: "الراء", short: [{ sound: "رَ", word: "رَجُل", sentence: "الرَّجُلُ الصَّالِحُ يُسَاعِدُ النَّاسَ." }], long: [{ sound: "رَا", word: "رَادْيُو", sentence: "جَدِّي يَسْتَمِعُ إِلَى الرَّادْيُو." }] },
-            "ز": { name: "الزاي", short: [{ sound: "زَ", word: "زَرَافَة", sentence: "الزَّرَافَةُ رَقَبَتُهَا طَوِيلَةٌ." }], long: [{ sound: "زَا", word: "زَائِر", sentence: "الزَّائِرُ كَرِيمٌ فِي مَنْزِلِنَا." }] }
-        };
-
-        let currentQuizWord = "";
-        let currentQuizLetter = "";
+        // الـ 11 حرفاً المحددة للمشروع
+        const arabicLetters = ['أ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز'];
+        
         let score = 0;
+        let currentQuestion = 1;
+        let currentLetter = '';
 
-        function initializeGame() {
-            const container = document.getElementById('letters-container');
-            container.innerHTML = "";
-            Object.keys(arabicData).forEach(letter => {
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function generateQuestion() {
+            if (currentQuestion > 11) {
+                endGame();
+                return;
+            }
+
+            document.getElementById('question-count').innerText = currentQuestion;
+            document.getElementById('result-message').innerText = '';
+
+            // اختيار حرف عشوائي صحيح
+            currentLetter = arabicLetters[Math.floor(Math.random() * arabicLetters.length)];
+            document.getElementById('letter').innerText = currentLetter;
+
+            // توليد خيارات (1 صحيح و 3 خطأ)
+            let options = [currentLetter];
+            while (options.length < 4) {
+                let randomLetter = arabicLetters[Math.floor(Math.random() * arabicLetters.length)];
+                if (!options.includes(randomLetter)) {
+                    options.push(randomLetter);
+                }
+            }
+
+            // خلط الخيارات عشوائياً
+            options.sort(() => Math.random() - 0.5);
+
+            // عرض الخيارات في الأزرار
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = "letter-btn";
-                btn.innerText = letter;
-                btn.onclick = () => showLetterDetails(letter);
-                container.appendChild(btn);
+                btn.className = 'btn-option';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, btn);
+                optionsContainer.appendChild(btn);
             });
-            generateQuizQuestion(false); // تعديل: توليد السؤال بدون إطلاق نطق تلقائي لحماية السكربت من الحظر
         }
 
-        function showLetterDetails(letter) {
-            const data = arabicData[letter];
-            document.getElementById('current-letter-display').innerText = letter;
-            document.getElementById('current-letter-title').innerText = `حرف ${data.name}`;
-            
-            const shortList = document.getElementById('short-vowels-list');
-            shortList.innerHTML = "";
-            data.short.forEach(item => {
-                shortList.appendChild(createAudioCard(item.sound, item.word, item.sentence));
-            });
+        function checkAnswer(selected, button) {
+            const buttons = document.querySelectorAll('.btn-option');
+            buttons.forEach(btn => btn.disabled = true); // تعطيل الأزرار لمنع التكرار
 
-            const longList = document.getElementById('long-vowels-list');
-            longList.innerHTML = "";
-            data.long.forEach(item => {
-                longList.appendChild(createAudioCard(item.sound, item.word, item.sentence));
-            });
+            const resultMessage = document.getElementById('result-message');
 
-            document.getElementById('details-card').classList.remove('hidden');
-            document.getElementById('details-card').scrollIntoView({ behavior: 'smooth' });
+            if (selected === currentLetter) {
+                score += 10;
+                document.getElementById('score').innerText = score;
+                button.style.backgroundColor = 'var(--success)';
+                button.style.color = 'white';
+                resultMessage.innerText = 'إجابة صحيحة! أحسنت ✨';
+                resultMessage.style.color = 'var(--success)';
+            } else {
+                button.style.backgroundColor = 'var(--danger)';
+                button.style.color = 'white';
+                resultMessage.innerText = `إجابة خاطئة! الحرف الصحيح هو (${currentLetter})`;
+                resultMessage.style.color = 'var(--danger)';
+                
+                // تلوين الإجابة الصحيحة بالأخضر
+                buttons.forEach(btn => {
+                    if(btn.innerText === currentLetter) {
+                        btn.style.backgroundColor = 'var(--success)';
+                        btn.style.color = 'white';
+                    }
+                });
+            }
+
+            currentQuestion++;
+            setTimeout(generateQuestion, 2000); // الانتقال للسؤال التالي بعد ثانيتين
         }
 
-        function createAudioCard(sound, word, sentence) {
-            const div = document.createElement('div');
-            div.className = "audio-card";
+        function endGame() {
+            const gamePage = document.getElementById('game-page');
+            gamePage.innerHTML = `
+                <h2>انتهت اللعبة! 🎉</h2>
+                <p style="font-size: 24px;">نتيجتك النهائية هي: <strong>${score}</strong> من 110</p>
+                <button class="btn-primary" onclick="location.reload()">العب مجدداً</button>
+            `;
+        }
+
+        // بدء اللعبة عند تحميل الصفحة
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html>
