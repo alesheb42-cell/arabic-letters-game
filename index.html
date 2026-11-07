@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,67 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة الحروف والأصوات التفاعلية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 0; text-align: right; }
+        header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        header h1 { margin: 0 0 8px 0; font-size: 28px; font-weight: 900; }
+        header p { margin: 0; font-size: 14px; color: #e0e7ff; }
+        main { max-w: 800px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+        section { background: white; border-radius: 16px; padding: 20px; margin-bottom: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+        section h2 { margin-top: 0; font-size: 20px; color: #0f172a; margin-bottom: 15px; }
+        .grid-letters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        @media(min-width: 480px) { .grid-letters { grid-template-columns: repeat(7, 1fr); } }
+        .letter-btn { background-color: #f5f3ff; color: #4f46e5; border: 1px solid #ddd6fe; font-size: 20px; font-weight: bold; padding: 15px; border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.2s; }
+        .letter-btn:active { transform: scale(0.95); background-color: #ddd6fe; }
+        .details-header { display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
+        .letter-big { w: 60px; h: 60px; background: #4f46e5; color: white; font-size: 32px; font-weight: 900; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(79,70,229,0.2); }
+        .details-header h3 { margin: 0; font-size: 22px; color: #1e293b; }
+        .details-header p { margin: 5px 0 0 0; font-size: 13px; color: #64748b; }
+        .vowels-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media(min-width: 600px) { .vowels-grid { grid-template-columns: 1fr 1fr; } }
+        .vowel-section-short { background-color: #fffbeb; border: 1px solid #fef3c7; padding: 15px; border-radius: 12px; }
+        .vowel-section-long { background-color: #ecfdf5; border: 1px solid #d1fae5; padding: 15px; border-radius: 12px; }
+        .vowel-section-short h4 { margin: 0 0 10px 0; color: #92400e; }
+        .vowel-section-long h4 { margin: 0 0 10px 0; color: #065f46; }
+        .audio-card { background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+        .audio-card-text { font-size: 15px; color: #334155; }
+        .audio-card-sound { font-weight: 900; color: #4f46e5; font-size: 18px; }
+        .audio-card p { margin: 4px 0 0 0; font-size: 12px; color: #64748b; }
+        .speak-btn { background: #eef2ff; color: #4f46e5; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .speak-btn:active { background: #e0e7ff; }
+        .quiz-box { background: #eef2ff; border: 1px solid #e0e7ff; padding: 20px; border-radius: 12px; text-align: center; }
+        .quiz-header { display: flex; justify-content: space-between; font-weight: bold; color: #3730a3; font-size: 14px; margin-bottom: 15px; max-w: 300px; margin-left: auto; margin-right: auto; }
+        .quiz-listen-btn { background: #4f46e5; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .quiz-listen-btn:active { transform: scale(0.95); }
+        .quiz-options { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .opt-btn { background: white; border: 1px solid #cbd5e1; color: #1e293b; font-size: 18px; font-weight: bold; padding: 10px 20px; border-radius: 10px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .opt-btn:active { background: #f1f5f9; }
+        .feedback { font-size: 14px; font-weight: bold; height: 20px; margin-top: 15px; }
+        .hidden { display: none !important; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
-    <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-8 shadow-md">
-        <h1 class="text-3xl font-black mb-2">🎓 منبر الحروف العربية التفاعلي</h1>
-        <p class="text-indigo-100 text-sm">تعلم الحروف والأصوات القصيرة والطويلة مع نظام اختبار ذكي</p>
+<body>
+    <header>
+        <h1>🎓 منبر الحروف العربية التفاعلي</h1>
+        <p>تعلم الحروف والأصوات القصيرة والطويلة مع نظام اختبار ذكي</p>
     </header>
-    <main class="max-w-4xl mx-auto p-4 md:p-8 space-y-8">
-        <section class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-            <h2 class="text-xl font-bold mb-4 text-slate-800">اختر حرفاً لتبدأ التعلم والاستماع:</h2>
-            <div id="letters-container" class="grid grid-cols-4 sm:grid-cols-7 gap-3"></div>
+    <main>
+        <section>
+            <h2>اختر حرفاً لتبدأ التعلم والاستماع:</h2>
+            <div id="letters-container" class="grid-letters"></div>
         </section>
-        <section id="details-card" class="bg-white rounded-2xl shadow-xl p-6 border border-slate-100 hidden">
-            <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
-                <div id="current-letter-display" class="w-16 h-16 bg-indigo-600 text-white font-black text-3xl flex items-center justify-center rounded-xl shadow-md">أ</div>
+        <section id="details-card" class="hidden">
+            <div class="details-header">
+                <div id="current-letter-display" class="letter-big">أ</div>
                 <div>
-                    <h3 id="current-letter-title" class="text-2xl font-bold text-slate-800">حرف الألف</h3>
-                    <p class="text-xs text-slate-500">انقر على البطاقات بالأسفل للاستماع لنطق الصوت والكلمة والجملة</p>
+                    <h3 id="current-letter-title">حرف الألف</h3>
+                    <p>انقر على بطاقات الحروف بالأسفل للاستماع إلى النطق والكلمات والجمل</p>
                 </div>
             </div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
-                    <h4 class="font-bold text-amber-800 mb-3 flex items-center gap-2">☀️ الأصوات القصيرة (الحركات)</h4>
-                    <div id="short-vowels-list" class="space-y-3"></div>
+            <div class="vowels-grid">
+                <div class="vowel-section-short">
+                    <h4>☀️ الأصوات القصيرة (الحركات)</h4>
+                    <div id="short-vowels-list"></div>
                 </div>
-                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
-                    <h4 class="font-bold text-emerald-800 mb-3 flex items-center gap-2">🌱 الأصوات الطويلة (المدود)</h4>
-                    <div id="long-vowels-list" class="space-y-3"></div>
+                <div class="vowel-section-long">
+                    <h4>🌱 الأصوات الطويلة (المدود)</h4>
+                    <div id="long-vowels-list"></div>
                 </div>
             </div>
         </section>
-        <section class="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
-            <h2 class="text-xl font-bold mb-2 text-slate-800 flex items-center gap-2">🎮 العب وتعلّم (اختبر معلوماتك)</h2>
-            <p class="text-sm text-slate-500 mb-4">استمع للكلمة ثم اختر الحرف الصحيح الذي تبدأ به الكلمة لتفوز بنقاط!</p>
-            <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl text-center space-y-4">
-                <div class="flex justify-between items-center max-w-xs mx-auto mb-2 text-sm font-bold text-indigo-700">
-                    <span>النقاط المتراكمة: <span id="score-display">0</span></span>
-                    <button onclick="generateQuizQuestion()" class="text-xs underline cursor-pointer hover:text-indigo-900">تغيير الكلمة 🔄</button>
+        <section>
+            <h2>🎮 العب وتعلّم (اختبر معلوماتك)</h2>
+            <p style="font-size: 13px; color: #64748b; margin-top:-10px; margin-bottom:15px;">استمع للكلمة ثم اختر الحرف الصحيح الذي تبدأ به الكلمة لتفوز بنقاط!</p>
+            <div class="quiz-box">
+                <div class="quiz-header">
+                    <span>النقاط المتراكمة: <span id="score-display" style="font-size:16px; color:#4f46e5;">0</span></span>
+                    <span onclick="generateQuizQuestion()" style="text-decoration: underline; cursor: pointer;">تغيير الكلمة 🔄</span>
                 </div>
-                <button onclick="speakQuizWord()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-md transition-all active:scale-95 inline-flex items-center gap-2 cursor-pointer font-bold">
-                    <span>🔊 اسمع الكلمة المطلوبة</span>
-                </button>
-                <div id="quiz-options" class="flex justify-center gap-3 pt-2"></div>
-                <div id="quiz-feedback" class="text-sm font-bold h-6 transition-all duration-300"></div>
+                <button onclick="speakQuizWord()" class="quiz-listen-btn">🔊 اسمع الكلمة المطلوبة</button>
+                <div id="quiz-options" class="quiz-options"></div>
+                <div id="quiz-feedback" class="feedback"></div>
             </div>
         </section>
     </main>
     <script>
         const arabicData = {
-            "أ": { name: "الألف", short: [{ sound: "أَ", word: "أَسَد", sentence: "الأَسَدُ مَلِكُ الغَابَةِ." }, { sound: "أُ", word: "أُذُن", sentence: "الأُذُنُ عُضْوُ السَّمْعِ." }, { sound: "إِ", word: "إِبْرِيق", sentence: "الإِبْرِيقُ مَلِيءٌ بِالمَاءِ." }], long: [{ sound: "آ", word: "آدَم", sentence: "آدَمُ وَلَدٌ ذَكِيٌّ." }, { sound: "أُو", word: "أُولَى", sentence: "هَذِهِ هِيَ المَرْتَبَةُ الأُولَى." }, { sound: "إِي", word: "إِيمَان", sentence: "الإِيمَانُ يَمْلأُ القَلْبَ." }] },
+            "أ": { name: "الألف", short: [{ sound: "أَ", word: "أَسَد", sentence: "الأَسَدُ مَلِكُ الغَابَةِ." }, { sound: "أُ", word: "أُذُن", sentence: "الأُذُنُ عُضْوُ Sub_السَّمْعِ." }, { sound: "إِ", word: "إِبْرِيق", sentence: "الإِبْرِيقُ مَلِيءٌ بِالمَاءِ." }], long: [{ sound: "آ", word: "آدَم", sentence: "آدَمُ وَلَدٌ ذَكِيٌّ." }, { sound: "أُو", word: "أُولَى", sentence: "هَذِهِ هِيَ المَرْتَبَةُ الأُولَى." }, { sound: "إِي", word: "إِيمَان", sentence: "الإِيمَانُ يَمْلأُ القَلْبَ." }] },
             "ب": { name: "الباء", short: [{ sound: "بَ", word: "بَقَرَة", sentence: "البَقَرَةُ تُعْطِينَا الحَلِيبَ." }, { sound: "بُ", word: "بُرْتُقَال", sentence: "البُرْتُقَالُ غَنِيٌّ بِالْفِيتَامِينَاتِ." }, { sound: "بِ", word: "بِنْت", sentence: "البِنْتُ تُسَاعِدُ أُمَّهَا." }], long: [{ sound: "بَا", word: "بَاب", sentence: "بَابُ البَيْتِ مَفْتُوحٌ." }, { sound: "بُو", word: "بُومَة", sentence: "البُومَةُ طَائِرٌ يَظْهَرُ لَيْلاً." }, { sound: "بِي", word: "بِيبِي", sentence: "يَنَامُ الطِّفْلُ فِي سَرِيرِهِ." }] },
             "ت": { name: "التاء", short: [{ sound: "تَ", word: "تَمْر", sentence: "التَّمْرُ غِذَاءٌ صِحِّيٌّ وَمُفِيدٌ." }, { sound: "تُ", word: "تُفَّاح", sentence: "التُّفَّاحُ الأَحْمَرُ لَذِيذٌ جِدّاً." }, { sound: "تِ", word: "تِمْسَاح", sentence: "التِّمْسَاحُ يَعِيشُ فِي المَاءِ." }], long: [{ sound: "تَا", word: "تَاج", sentence: "المَلِكُ يَلْبَسُ تَاجاً ذَهَبِيّاً." }, { sound: "تُو", word: "تُوت", sentence: "قَطَفْنَا التُّوتَ الطَّازَجَ مِنَ الحَدِيقَةِ." }, { sound: "تِي", word: "تِين", sentence: "التِّينُ مِنَ الفَوَاكِهِ الطَّيِّبَةِ." }] },
             "ث": { name: "الثاء", short: [{ sound: "ثَ", word: "ثَعْلَب", sentence: "الثَّعْلَبُ حَيَوَانٌ مَاكِرٌ." }, { sound: "ثُ", word: "ثُعْبَان", sentence: "الثُّعْبَانُ يَدُبُّ عَلَى الأَرْضِ." }, { sound: "ثِ", word: "ثِيَاب", sentence: "ثِيَابِي نَظِيفَةٌ وَمُرَتَّبَةٌ." }], long: [{ sound: "ثَا", word: "ثَالِث", sentence: "هَذَا هُوَ المَرْكَزُ الثَّالِثُ." }, { sound: "ثُو", word: "ثُوم", sentence: "الثُّومُ يُعْطِي الطَّعَامَ نَكْهَةً طَيِّبَةً." }, { sound: "ثِي", word: "ثِيرَان", sentence: "الثِّيرَانُ تَحْرُثُ الأَرْضَ." }] },
             "ج": { name: "الجيم", short: [{ sound: "جَ", word: "جَمَل", sentence: "الجَمَلُ سَفِينَةُ الصَّحْرَاءِ." }, { sound: "جُ", word: "جُبْن", sentence: "جُبْنُ مَصْنُوعٌ مِنَ الحَلِيبِ." }, { sound: "جِ", word: "جِدَار", sentence: "جِدَارُ الغُرْفَةِ مَبْنِيٌّ بِقُوَّةٍ." }], long: [{ sound: "جَا", word: "جَامِعَة", sentence: "أَخِي الكَبِيرُ يَدْرُسُ فِي الجَامِعَةِ." }, { sound: "جُو", word: "جُوع", sentence: "أَشْعُرُ بِالْجُوعِ بَعْدَ اللَّعِبِ." }, { sound: "جِي", word: "جِيرَان", sentence: "جِيرَانُنَا طَيِّبُونَ وَمُتَعَاوِنُونَ." }] },
             "ح": { name: "الحاء", short: [{ sound: "حَ", word: "حَلِيب", sentence: "الحَلِيبُ يُقَوِّي العِظَامَ." }, { sound: "حُ", word: "حُوت", sentence: "الحُوتُ أَضْخَمُ كَائِنٍ فِي البَحْرِ." }, { sound: "حِ", word: "حِمَار", sentence: "الحِمَارُ حَيَوَانٌ صَبُورٌ." }], long: [{ sound: "حَا", word: "حَافِلَة", sentence: "رَكِبْنَا حَافِلَةَ المَدْرَسَةِ." }, { sound: "حُو", word: "حُوتِي", sentence: "النَّجْمُ الحُوتِيُّ يَلْمَعُ فِي السَّمَاءِ." }, { sound: "حِي", word: "حِيتَان", sentence: "تَسْبَحُ الحِيتَانُ فِي المُحِيطِ." }] },
-            "خ": { name: "الخاء", short: [{ sound: "خَ", word: "خَرُوف", sentence: "يَرْعَى الخَرُوفُ فِي العُشْبِ." }, { sound: "خُ", word: "خُبْز", sentence: "الخُبْزُ السَّاخِنُ لَذِيذٌ جِدّاً." }, { sound: "خِ", word: "خِيَار", sentence: "الخِيَارُ طَازَجٌ وَمُفِيدٌ لِلصِّحَّةِ." }], long: [{ sound: "خَا", word: "خَاتَم", sentence: "أُمِّي تَلْبَسُ خَاتَماً جَمِيلاً." }, { sound: "خُو", word: "خُوخ", sentence: "الخُوخُ مِنَ الفَوَاكِهِ الصَّيْفِيَّةِ." }, { sound: "خِي", word: "خِيار", sentence: "الخِيَارُ يُضَافُ إِلَى السَّلَطَةِ." }] },
-            "د": { name: "الدال", short: [{ sound: "دَ", word: "دَجَاجَة", sentence: "الدَّجَاجَةُ تَبْحَثُ عَنِ الحَبِّ." }, { sound: "دُ", word: "دُبّ", sentence: "الدُّبُّ يَعِيشُ فِي الغَابَةِ البَارِدَةِ." }, { sound: "دِ", word: "دِيك", sentence: "الدِّيكُ يَصِيحُ فِي الصَّبَاحِ البَاكِرِ." }], long: [{ sound: "دَا", word: "دَار", sentence: "دَارُنَا وَاسِعَةٌ وَجَمِيلَةٌ." }, { sound: "دُو", word: "دُودَة", sentence: "الدُّودَةُ تَزْحَفُ عَلَى الأَرْضِ." }, { sound: "دِي", word: "دِيكور", sentence: "دِيكُورُ المَنْزِلِ رَائِعٌ جِدّاً." }] },
-            "ذ": { name: "الذال", short: [{ sound: "ذَ", word: "ذَهَب", sentence: "الذَّهَبُ مَعْدِنٌ ثَمِينٌ وَلَامِعٌ." }, { sound: "ذُ", word: "ذُبَابَة", sentence: "الذُّبَابَةُ حَشَرَةٌ مُزْعِجَةٌ." }, { sound: "ذِ", word: "ذِئْب", sentence: "الذِّئْبُ حَيَوَانٌ قَوِيٌّ وَذَكِيٌّ." }], long: [{ sound: "ذَا", word: "ذَاكِرَة", sentence: "القِرَاءَةُ تُقَوِّي ذَاكِرَةَ الإِنْسَانِ." }, { sound: "ذُو", word: "بُذُور", sentence: "الفَلَّاحُ يَزْرَعُ البُذُورَ فِي الأَرْضِ." }, { sound: "ذِي", word: "مُذِيع", sentence: "المُذِيعُ يَتَحَدَّثُ بِمَكْرُوفُونِ المَحَطَّةِ." }] },
-            "ر": { name: "الراء", short: [{ sound: "رَ", word: "رَجُل", sentence: "الرَّجُلُ الصَّالِحُ يُسَاعِدُ النَّاسَ." }, { sound: "رُ", word: "رُمَّان", sentence: "الرُّمَّانُ فَاكِهَةٌ شَهِيَّةٌ وَمُفِيدَةٌ." }, { sound: "رِ", word: "رِيشَة", sentence: "رِيشَةُ الطَّائِرِ خَفِيفَةٌ وَمُلَوَّنَةٌ." }], long: [{ sound: "رَا", word: "رَادْيُو", sentence: "جَدِّي يَسْتَمِعُ إِلَى الرَّادْيُو." }, { sound: "رُو", word: "قُرُود", sentence: "القُرُودُ تَقْفِزُ فَوْقَ الأَشْجَارِ." }, { sound: "رِي", word: "رِيش", sentence: "الرِّيشُ يُغَطِّي جِسْمَ الطُّيُورِ." }] }
-        };
         let currentQuizWord = "";
         let currentQuizLetter = "";
         let score = 0;
@@ -75,7 +104,7 @@
             container.innerHTML = "";
             Object.keys(arabicData).forEach(letter => {
                 const btn = document.createElement('button');
-                btn.className = "bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold p-4 rounded-xl border border-indigo-200 text-xl transition-all active:scale-95 cursor-pointer text-center";
+                btn.className = "letter-btn";
                 btn.innerText = letter;
                 btn.onclick = () => showLetterDetails(letter);
                 container.appendChild(btn);
@@ -106,15 +135,15 @@
 
         function createAudioCard(sound, word, sentence) {
             const div = document.createElement('div');
-            div.className = "flex items-center justify-between bg-white p-3 rounded-lg border border-slate-100 shadow-sm hover:shadow transition-all";
+            div.className = "audio-card";
             div.innerHTML = `
-                <div>
-                    <span class="font-black text-lg text-indigo-600">${sound}</span>
-                    <span class="mx-2 text-slate-400">|</span>
-                    <span class="font-bold text-slate-700">${word}</span>
-                    <p class="text-xs text-slate-500 mt-1">${sentence}</p>
+                <div class="audio-card-text">
+                    <span class="audio-card-sound">${sound}</span>
+                    <span style="color:#cbd5e1; margin:0 5px;">|</span>
+                    <span style="font-weight:bold;">${word}</span>
+                    <p>${sentence}</p>
                 </div>
-                <button class="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 p-2 rounded-full cursor-pointer text-sm font-bold">🔊 نطق</button>
+                <button class="speak-btn">🔊 نطق</button>
             `;
             div.querySelector('button').onclick = () => {
                 speakText(`${sound}.. ${word}.. ${sentence}`);
@@ -159,7 +188,7 @@
 
             options.forEach(letter => {
                 const btn = document.createElement('button');
-                btn.className = "bg-white hover:bg-slate-100 text-slate-800 font-bold px-5 py-3 rounded-xl border border-slate-200 text-lg transition-all active:scale-95 cursor-pointer shadow-sm";
+                btn.className = "opt-btn";
                 btn.innerText = letter;
                 btn.onclick = () => checkQuizAnswer(letter);
                 optionsContainer.appendChild(btn);
@@ -174,14 +203,14 @@
             const feedback = document.getElementById('quiz-feedback');
             if (selectedLetter === currentQuizLetter) {
                 feedback.innerText = "إجابة صحيحة! أحسنت وممتاز 🎉";
-                feedback.className = "text-sm font-bold h-6 text-emerald-600";
+                feedback.style.color = "#059669";
                 score += 10;
                 document.getElementById('score-display').innerText = score;
                 speakText("إجابة صحيحة");
                 setTimeout(generateQuizQuestion, 2000);
             } else {
-                feedback.innerText = "محاولة خاطئة، اسمع الكلمة وحاول مجدداً! ❌";
-                feedback.className = "text-sm font-bold h-6 text-rose-600";
+                feedback.innerText = "محاولة خاطئة، حاول مجدداً! ❌";
+                feedback.style.color = "#dc2626";
                 speakText("حاول مرة أخرى");
             }
         }
