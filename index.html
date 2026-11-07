@@ -79,6 +79,7 @@
             </div>
         </section>
     </main>
+
     <script>
         const arabicData = {
             "أ": { name: "الألف", short: [{ sound: "أَ", word: "أَسَد", sentence: "الأَسَدُ مَلِكُ الغَابَةِ." }], long: [{ sound: "آ", word: "آدَم", sentence: "آدَمُ وَلَدٌ ذَكِيٌّ." }] },
@@ -94,7 +95,9 @@
             "ز": { name: "الزاي", short: [{ sound: "زَ", word: "زَرَافَة", sentence: "الزَّرَافَةُ رَقَبَتُهَا طَوِيلَةٌ." }], long: [{ sound: "زَا", word: "زَائِر", sentence: "الزَّائِرُ كَرِيمٌ فِي مَنْزِلِنَا." }] }
         };
 
-        let currentQuizWord = "", currentQuizLetter = "", score = 0;
+        let currentQuizWord = "";
+        let currentQuizLetter = "";
+        let score = 0;
 
         function initializeGame() {
             const container = document.getElementById('letters-container');
@@ -116,16 +119,22 @@
             
             const shortList = document.getElementById('short-vowels-list');
             shortList.innerHTML = "";
-            data.short.forEach(item => shortList.appendChild(createAudioCard(item.sound, item.word, item.sentence)));
+            data.short.forEach(item => {
+                shortList.appendChild(createAudioCard(item.sound, item.word, item.sentence));
+            });
 
             const longList = document.getElementById('long-vowels-list');
             longList.innerHTML = "";
-            data.long.forEach(item => longList.appendChild(createAudioCard(item.sound, item.word, item.sentence)));
+            data.long.forEach(item => {
+                longList.appendChild(createAudioCard(item.sound, item.word, item.sentence));
+            });
 
             document.getElementById('details-card').classList.remove('hidden');
+            document.getElementById('details-card').scrollIntoView({ behavior: 'smooth' });
         }
 
         function createAudioCard(sound, word, sentence) {
             const div = document.createElement('div');
             div.className = "audio-card";
-            div.innerHTML = `<div class="audio-card-text"><span class="audio-card-sound">${sound}</span> | <b>${word}</b><p>${sentence}</p></div><button class="speak-btn">🔊 نطق</button>`;
+            div.innerHTML = `
+                <div class="audio-card-text">
