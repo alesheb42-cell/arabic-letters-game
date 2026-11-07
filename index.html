@@ -4,155 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة الحروف العربية التفاعلية</title>
+    <!-- كود الإعلانات التلقائية من جوجل سيتم وضعه هنا لاحقاً -->
     <style>
-        :root {
-            --primary: #4a90e2;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background: #34495e;
-            padding: 10px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .active {
-            display: block;
-        }
-
-        .letter-display {
-            font-size: 80px;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 20px 0;
-            animation: bounce 0.5s ease;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 12px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-option {
-            background-color: var(--light);
-            border: 2px solid #ddd;
-            color: var(--dark);
-        }
-
-        .btn-option:hover {
-            background-color: #e9ecef;
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .score-board {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* مساحة مخصصة لإعلانات AdSense */
-        .ads-container {
-            margin: 20px auto;
-            max-width: 728px;
-            min-height: 90px;
-            background: #eee;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px dashed #ccc;
-            font-size: 12px;
-            color: #777;
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: auto;
-        }
-
-        @keyframes bounce {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        :root { --primary: #4a90e2; --success: #2ecc71; --danger: #e74c3c; --dark: #2c3e50; --light: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        header { background-color: var(--dark); color: white; text-align: center; padding: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: center; gap: 15px; background: #34495e; padding: 10px; }
+        nav a { color: white; text-decoration: none; font-weight: bold; cursor: pointer; }
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; max-width: 500px; width: 100%; }
+        .page { display: none; } .active { display: block; }
+        .letter-display { font-size: 80px; font-weight: bold; color: var(--primary); margin: 20px 0; animation: bounce 0.5s ease; }
+        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        button { padding: 12px 20px; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .btn-option { background-color: var(--light); border: 2px solid #ddd; color: var(--dark); }
+        .btn-option:hover { background-color: #e9ecef; transform: translateY(-2px); }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .score-board { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 18px; font-weight: bold; }
+        .ads-container { margin: 20px auto; max-width: 728px; min-height: 90px; background: #eee; display: flex; justify-content: center; align-items: center; border: 1px dashed #ccc; font-size: 12px; color: #777; }
+        footer { background-color: var(--dark); color: white; text-align: center; padding: 15px; margin-top: auto; }
+        @keyframes bounce { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -167,47 +38,35 @@
         <a onclick="showPage('contact-page')">اتصل بنا</a>
     </nav>
 
-    <!-- إعلان علوي -->
-    <div class="ads-container">
-        <span>مساحة إعلانية (سيتم ربطها بـ AdSense لاحقاً)</span>
+    <div class="ads-container" id="ad-top">
+        <span>مساحة إعلانية نشطة قريباً</span>
     </div>
 
     <main>
-        <!-- صفحة اللعبة -->
         <div id="game-page" class="container page active">
             <div class="score-board">
                 <div>النقاط: <span id="score">0</span></div>
                 <div>المحاولة: <span id="question-count">1</span>/11</div>
             </div>
-
             <p>ما هو الحرف الظاهر أمامك؟</p>
             <div id="letter" class="letter-display">أ</div>
-
-            <div class="options-grid" id="options">
-                <!-- الأزرار ستتولد هنا بواسطة جافاسكربت -->
-            </div>
-            
+            <div class="options-grid" id="options"></div>
             <div id="result-message" style="margin-top: 15px; font-weight: bold;"></div>
         </div>
 
-        <!-- صفحة سياسة الخصوصية (مهمة لجوجل أدسينس) -->
         <div id="privacy-page" class="container page">
             <h2>سياسة الخصوصية</h2>
-            <p>خصوصية زوارنا لها أهمية بالغة بالنسبة لنا. توضح هذه الوثيقة أنواع المعلومات الشخصية التي نجمعها وكيفية استخدامها.</p>
-            <p>نحن نستخدم شركات إعلان خارجية (مثل Google AdSense) لعرض الإعلانات عندما تزور موقعنا. قد تستخدم هذه الشركات معلومات حول زياراتك لهذا الموقع من أجل تقديم إعلانات حول السلع والخدمات التي تهمك.</p>
+            <p>نحن نحترم خصوصيتك. تعرض هذه الصفحة معلومات حول كيفية التعامل مع البيانات والإعلانات الموجهة عبر مزودي الخدمة مثل جوجل.</p>
         </div>
 
-        <!-- صفحة اتصل بنا (مهمة لجوجل أدسينس) -->
         <div id="contact-page" class="container page">
             <h2>اتصل بنا</h2>
-            <p>إذا كان لديك أي استفسار حول اللعبة أو سياسة الخصوصية، يمكنك التواصل معنا عبر البريد الإلكتروني:</p>
-            <p><strong>support@yourdomain.com</strong></p>
+            <p>للتواصل والاستفسار، يرجى مراسلتنا عبر البريد الإلكتروني الخاص بإدارة اللعبة.</p>
         </div>
     </main>
 
-    <!-- إعلان سفلي -->
-    <div class="ads-container">
-        <span>مساحة إعلانية (سيتم ربطها بـ AdSense لاحقاً)</span>
+    <div class="ads-container" id="ad-bottom">
+        <span>مساحة إعلانية نشطة قريباً</span>
     </div>
 
     <footer>
@@ -215,44 +74,21 @@
     </footer>
 
     <script>
-        // الـ 11 حرفاً المحددة للمشروع
         const arabicLetters = ['أ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز'];
-        
-        let score = 0;
-        let currentQuestion = 1;
-        let currentLetter = '';
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
+        let score = 0, currentQuestion = 1, currentLetter = '';
+        function showPage(pageId) { document.querySelectorAll('.page').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); }
         function generateQuestion() {
-            if (currentQuestion > 11) {
-                endGame();
-                return;
-            }
-
+            if (currentQuestion > 11) { endGame(); return; }
             document.getElementById('question-count').innerText = currentQuestion;
             document.getElementById('result-message').innerText = '';
-
-            // اختيار حرف عشوائي صحيح
             currentLetter = arabicLetters[Math.floor(Math.random() * arabicLetters.length)];
             document.getElementById('letter').innerText = currentLetter;
-
-            // توليد خيارات (1 صحيح و 3 خطأ)
             let options = [currentLetter];
             while (options.length < 4) {
                 let randomLetter = arabicLetters[Math.floor(Math.random() * arabicLetters.length)];
-                if (!options.includes(randomLetter)) {
-                    options.push(randomLetter);
-                }
+                if (!options.includes(randomLetter)) options.push(randomLetter);
             }
-
-            // خلط الخيارات عشوائياً
             options.sort(() => Math.random() - 0.5);
-
-            // عرض الخيارات في الأزرار
             const optionsContainer = document.getElementById('options');
             optionsContainer.innerHTML = '';
             options.forEach(opt => {
@@ -263,49 +99,29 @@
                 optionsContainer.appendChild(btn);
             });
         }
-
         function checkAnswer(selected, button) {
             const buttons = document.querySelectorAll('.btn-option');
-            buttons.forEach(btn => btn.disabled = true); // تعطيل الأزرار لمنع التكرار
-
+            buttons.forEach(btn => btn.disabled = true);
             const resultMessage = document.getElementById('result-message');
-
             if (selected === currentLetter) {
-                score += 10;
-                document.getElementById('score').innerText = score;
-                button.style.backgroundColor = 'var(--success)';
-                button.style.color = 'white';
-                resultMessage.innerText = 'إجابة صحيحة! أحسنت ✨';
-                resultMessage.style.color = 'var(--success)';
+                score += 10; document.getElementById('score').innerText = score;
+                button.style.backgroundColor = 'var(--success)'; button.style.color = 'white';
+                resultMessage.innerText = 'إجابة صحيحة! أحسنت ✨'; resultMessage.style.color = 'var(--success)';
             } else {
-                button.style.backgroundColor = 'var(--danger)';
-                button.style.color = 'white';
-                resultMessage.innerText = `إجابة خاطئة! الحرف الصحيح هو (${currentLetter})`;
-                resultMessage.style.color = 'var(--danger)';
-                
-                // تلوين الإجابة الصحيحة بالأخضر
-                buttons.forEach(btn => {
-                    if(btn.innerText === currentLetter) {
-                        btn.style.backgroundColor = 'var(--success)';
-                        btn.style.color = 'white';
-                    }
-                });
+                button.style.backgroundColor = 'var(--danger)'; button.style.color = 'white';
+                resultMessage.innerText = `إجابة خاطئة! الحرف الصحيح هو (${currentLetter})`; resultMessage.style.color = 'var(--danger)';
+                buttons.forEach(btn => { if(btn.innerText === currentLetter) { btn.style.backgroundColor = 'var(--success)'; btn.style.color = 'white'; } });
             }
-
             currentQuestion++;
-            setTimeout(generateQuestion, 2000); // الانتقال للسؤال التالي بعد ثانيتين
+            setTimeout(generateQuestion, 2000);
         }
-
         function endGame() {
-            const gamePage = document.getElementById('game-page');
-            gamePage.innerHTML = `
+            document.getElementById('game-page').innerHTML = `
                 <h2>انتهت اللعبة! 🎉</h2>
                 <p style="font-size: 24px;">نتيجتك النهائية هي: <strong>${score}</strong> من 110</p>
                 <button class="btn-primary" onclick="location.reload()">العب مجدداً</button>
             `;
         }
-
-        // بدء اللعبة عند تحميل الصفحة
         window.onload = generateQuestion;
     </script>
 </body>
